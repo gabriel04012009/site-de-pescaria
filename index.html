@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos | Pescaria Total</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold:     #c9a84c;
+      --gold-l:   #e8c97a;
+      --gold-d:   #9c7a2e;
+      --ink:      #0f0e0b;
+      --ink-2:    #1c1b16;
+      --ink-3:    #2a2820;
+      --sand:     #f5f0e8;
+      --sand-2:   #ede7d9;
+      --sand-3:   #e0d8c6;
+      --mist:     #8a8070;
+      --white:    #fdfbf7;
+      --serif:    'Playfair Display', serif;
+      --sans:     'Outfit', sans-serif;
+      --ease:     cubic-bezier(0.22,1,0.36,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--sand); color: var(--ink); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { font-family: var(--sans); cursor: pointer; }
+
+    /* HEADER */
+    header {
+      position: sticky; top: 0; z-index: 999;
+      background: var(--ink); border-bottom: 1px solid var(--ink-3);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 52px; height: 66px;
+    }
+    .brand { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--gold); letter-spacing: .18em; text-transform: uppercase; }
+    .brand span { color: var(--white); font-weight: 400; font-style: italic; }
+    nav ul { display: flex; gap: 32px; }
+    nav a { font-size: 10.5px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: #555; transition: color .2s; position: relative; padding-bottom: 3px; }
+    nav a::after { content:''; position:absolute; bottom:-1px; left:0; width:0; height:1px; background:var(--gold); transition:width .3s var(--ease); }
+    nav a:hover, nav a.active { color: var(--gold); }
+    nav a:hover::after, nav a.active::after { width: 100%; }
+    .nav-cta { display:flex; align-items:center; gap:7px; font-size:10.5px; font-weight:600; letter-spacing:.15em; text-transform:uppercase; color:var(--ink); background:var(--gold); padding:9px 20px; border-radius:1px; transition:background .2s; }
+    .nav-cta:hover { background: var(--gold-l); }
+
+    /* HERO */
+    .hero { background:var(--ink); position:relative; overflow:hidden; padding:80px 52px 70px; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end; }
+    .hero::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(-45deg,transparent,transparent 52px,rgba(201,168,76,.025) 52px,rgba(201,168,76,.025) 53px); }
+    .hero-kicker { display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+    .hero-kicker-line { width:24px; height:1px; background:var(--gold); }
+    .hero-kicker span { font-size:10px; letter-spacing:.35em; text-transform:uppercase; color:var(--gold); font-weight:500; }
+    .hero h1 { font-family:var(--serif); font-size:clamp(34px,4vw,56px); font-weight:900; line-height:1.06; color:var(--white); position:relative; }
+    .hero h1 em { font-style:italic; color:var(--gold); }
+    .hero-right { display:flex; flex-direction:column; align-items:flex-end; gap:20px; position:relative; }
+    .hero-desc { font-size:13.5px; color:#555; line-height:1.85; text-align:right; max-width:260px; }
+    .hero-cta { display:inline-flex; align-items:center; gap:9px; font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--ink); background:var(--gold); padding:13px 26px; border-radius:1px; transition:background .2s, transform .2s; }
+    .hero-cta:hover { background:var(--gold-l); transform:translateY(-2px); }
+    .hero-cta svg { width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2; transition:transform .2s; }
+    .hero-cta:hover svg { transform:translateX(3px); }
+
+    /* STATS */
+    .statsbar { background:var(--ink-2); border-bottom:1px solid var(--ink-3); display:grid; grid-template-columns:repeat(4,1fr); }
+    .stat { padding:20px 28px; border-right:1px solid var(--ink-3); position:relative; overflow:hidden; }
+    .stat:last-child { border-right:none; }
+    .stat::after { content:''; position:absolute; bottom:0; left:0; width:0; height:2px; background:var(--gold); transition:width .5s var(--ease); }
+    .stat:hover::after { width:100%; }
+    .stat-n { font-family:var(--serif); font-size:28px; color:var(--gold); font-weight:700; line-height:1; }
+    .stat-l { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:#444; margin-top:4px; }
+
+    /* SECTION */
+    .sec { padding:64px 52px; }
+    .sec.dark  { background:var(--ink); }
+    .sec.white { background:var(--white); }
+    .sec.sand  { background:var(--sand); }
+    .eyebrow { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+    .eyebrow-line { width:18px; height:1px; background:var(--gold); }
+    .eyebrow span { font-size:10px; letter-spacing:.32em; text-transform:uppercase; color:var(--gold); font-weight:500; }
+    .sec-title { font-family:var(--serif); font-size:clamp(22px,2.5vw,34px); font-weight:700; color:var(--ink); line-height:1.15; }
+    .sec-title em { font-style:italic; color:var(--gold-d); }
+    .sec-title.light { color:var(--white); }
+    .sec-title.light em { color:var(--gold); }
+    .sec-head { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:32px; }
+    .sec-count { font-size:11px; color:var(--mist); letter-spacing:.1em; padding-bottom:3px; }
+
+    /* CAT NAV */
+    .cat-nav { display:flex; gap:0; margin-bottom:40px; border:1px solid var(--sand-3); border-radius:2px; overflow-x:auto; width:fit-content; max-width:100%; }
+    .cat-btn { font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--mist); background:var(--white); border:none; border-right:1px solid var(--sand-3); padding:11px 20px; transition:all .2s; white-space:nowrap; }
+    .cat-btn:last-child { border-right:none; }
+    .cat-btn:hover, .cat-btn.active { background:var(--ink); color:var(--gold); }
+
+    /* CAT BLOCK */
+    .cat-block { margin-bottom:56px; }
+    .cat-block:last-child { margin-bottom:0; }
+    .cat-title { display:flex; align-items:center; gap:12px; font-family:var(--serif); font-size:20px; font-weight:700; color:var(--ink); margin-bottom:18px; padding-bottom:14px; border-bottom:1px solid var(--sand-3); }
+    .cat-title-count { font-family:var(--sans); font-size:11px; font-weight:400; color:var(--mist); margin-left:auto; letter-spacing:.1em; }
+
+    /* GRID */
+    .pgrid { display:grid; grid-template-columns:repeat(5,1fr); gap:2px; background:var(--sand-3); border:1px solid var(--sand-3); border-radius:2px; overflow:hidden; }
+    .pgrid.g4 { grid-template-columns:repeat(4,1fr); }
+    .pgrid.g3 { grid-template-columns:repeat(3,1fr); }
+
+    /* CARD */
+    .card { background:var(--white); display:flex; flex-direction:column; position:relative; overflow:hidden; transition:transform .35s var(--ease), box-shadow .35s var(--ease); }
+    .card:hover { transform:scale(1.03); z-index:10; box-shadow:0 16px 48px rgba(15,14,11,.15); }
+    .cthumb { height:130px; background:var(--sand-2); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; border-bottom:1px solid var(--sand-3); transition:background .3s; }
+    .card:hover .cthumb { background:var(--sand-3); }
+    .cthumb-icon { font-size:40px; transition:transform .4s var(--ease); user-select:none; }
+    .card:hover .cthumb-icon { transform:scale(1.14) translateY(-4px); }
+    .cthumb::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,rgba(201,168,76,.1),transparent); opacity:0; transition:opacity .3s; }
+    .card:hover .cthumb::after { opacity:1; }
+
+    /* Tags */
+    .ctag { position:absolute; top:10px; left:10px; font-size:8.5px; font-weight:600; letter-spacing:.18em; text-transform:uppercase; padding:4px 8px; border-radius:1px; }
+    .ctag-dk   { background:var(--ink); color:var(--gold); }
+    .ctag-gd   { background:var(--gold); color:var(--ink); }
+    .ctag-new  { background:#16432a; color:#5fe08a; }
+    .ctag-promo{ background:#3d1f1f; color:#e07070; }
+    .cbadge { position:absolute; top:10px; right:10px; width:36px; height:36px; border-radius:50%; background:var(--gold); color:var(--ink); font-size:9.5px; font-weight:700; display:flex; align-items:center; justify-content:center; text-align:center; line-height:1.1; }
+
+    /* Body */
+    .cbody { padding:14px 14px 12px; flex:1; display:flex; flex-direction:column; }
+    .ccat  { font-size:9px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold-d); font-weight:500; margin-bottom:3px; }
+    .ch    { font-family:var(--serif); font-size:13.5px; font-weight:700; color:var(--ink); line-height:1.25; margin-bottom:5px; }
+    .cdesc { font-size:11px; color:var(--mist); line-height:1.75; flex:1; margin-bottom:10px; }
+    .cstars { display:flex; align-items:center; gap:4px; margin-bottom:10px; }
+    .stars  { display:flex; gap:1px; }
+    .star   { width:10px; height:10px; fill:var(--gold); }
+    .star.e { fill:var(--sand-3); }
+    .rct    { font-size:10px; color:var(--mist); }
+    .cfoot  { display:flex; align-items:flex-end; justify-content:space-between; padding-top:10px; border-top:1px solid var(--sand-2); }
+    .cprice { font-family:var(--serif); font-size:17px; font-weight:700; color:var(--ink); line-height:1; }
+    .cprice-old  { font-size:10.5px; color:#b0a898; text-decoration:line-through; margin-top:2px; }
+    .cprice-inst { font-size:10px; color:var(--mist); margin-top:2px; }
+
+    /* Botões */
+    .bbuy { display:inline-flex; align-items:center; gap:5px; font-size:9.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--ink); background:transparent; border:1.5px solid var(--ink); padding:7px 12px; border-radius:1px; transition:all .22s var(--ease); }
+    .bbuy svg { width:10px; height:10px; stroke:currentColor; fill:none; stroke-width:2; transition:transform .2s; }
+    .bbuy:hover { background:var(--ink); color:var(--gold); }
+    .bbuy:hover svg { transform:translateX(2px); }
+    .bbuy-gd { background:var(--gold); border-color:var(--gold); color:var(--ink); }
+    .bbuy-gd:hover { background:var(--gold-l); border-color:var(--gold-l); color:var(--ink); }
+
+    /* Wish */
+    .bwish { position:absolute; bottom:12px; right:12px; width:26px; height:26px; border-radius:50%; background:var(--sand); border:1px solid var(--sand-3); display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(.75); transition:all .22s var(--ease); }
+    .card:hover .bwish { opacity:1; transform:scale(1); }
+    .bwish svg { width:11px; height:11px; stroke:#888; fill:none; stroke-width:1.8; transition:stroke .2s; }
+    .bwish:hover { background:#fee2e2; border-color:#fca5a5; }
+    .bwish:hover svg { stroke:#e05252; }
+    .bwish.on svg { fill:var(--gold); stroke:var(--gold); }
+
+    /* DIVIDER */
+    .div { height:1px; background:var(--sand-3); margin:0 52px; }
+
+    /* VIDEO */
+    .vid-layout { display:grid; grid-template-columns:1fr 2fr; gap:52px; align-items:center; }
+    .vid-meta { display:flex; flex-direction:column; gap:10px; padding-top:16px; border-top:1px solid var(--sand-2); margin-top:16px; }
+    .vid-meta-item { display:flex; align-items:center; gap:9px; font-size:12.5px; color:var(--mist); }
+    .vid-meta-item svg { width:14px; height:14px; stroke:var(--gold); fill:none; stroke-width:1.8; flex-shrink:0; }
+    .vid-wrap { position:relative; }
+    .vid-wrap::before { content:''; position:absolute; top:10px; left:10px; right:-10px; bottom:-10px; border:1px solid var(--gold); border-radius:2px; opacity:.3; pointer-events:none; }
+    .vid-frame { border-radius:2px; overflow:hidden; border:1px solid var(--sand-3); aspect-ratio:16/9; }
+    .vid-frame iframe { width:100%; height:100%; border:none; display:block; }
+
+    /* MAPA */
+    .mapa-layout { display:grid; grid-template-columns:1fr 2fr; gap:24px; margin-top:32px; }
+    .mapa-cards { display:flex; flex-direction:column; gap:10px; }
+    .mapa-card { background:var(--ink-2); border:1px solid var(--ink-3); border-radius:2px; padding:16px 18px; transition:border-color .2s; }
+    .mapa-card:hover { border-color:var(--gold-d); }
+    .mapa-lbl { font-size:9px; letter-spacing:.25em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:5px; }
+    .mapa-val { font-size:13px; color:#8a8070; line-height:1.65; font-weight:300; }
+    .mapa-val strong { color:var(--white); font-weight:500; }
+    .mapa-frame { border-radius:2px; overflow:hidden; border:1px solid var(--ink-3); height:100%; min-height:340px; }
+    .mapa-frame iframe { width:100%; height:100%; border:none; display:block; filter:grayscale(.6) contrast(1.1); transition:filter .4s; }
+    .mapa-frame:hover iframe { filter:grayscale(0); }
+
+    /* FOOTER */
+    footer { background:var(--ink); border-top:1px solid var(--ink-3); padding:24px 52px; display:flex; align-items:center; justify-content:space-between; }
+    .fbrand { font-family:var(--serif); font-size:15px; font-weight:700; color:var(--gold); letter-spacing:.18em; text-transform:uppercase; }
+    .flinks { display:flex; gap:22px; }
+    .flinks a { font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#333; transition:color .2s; }
+    .flinks a:hover { color:var(--gold); }
+    .fcopy { font-size:11px; color:#333; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+    .cat-block { animation:fadeUp .5s var(--ease) both; }
+    .cat-block:nth-child(1){animation-delay:.04s} .cat-block:nth-child(2){animation-delay:.10s}
+    .cat-block:nth-child(3){animation-delay:.16s} .cat-block:nth-child(4){animation-delay:.22s}
+    .cat-block:nth-child(5){animation-delay:.28s} .cat-block:nth-child(6){animation-delay:.34s}
+    .cat-block:nth-child(7){animation-delay:.40s} .cat-block:nth-child(8){animation-delay:.46s}
+
+    /* RESPONSIVE */
+    @media(max-width:1100px){ .pgrid{grid-template-columns:repeat(3,1fr)} .pgrid.g4{grid-template-columns:repeat(3,1fr)} }
+    @media(max-width:900px){
+      header{padding:0 20px} .hero{padding:44px 20px;grid-template-columns:1fr}
+      .hero-right{align-items:flex-start} .hero-desc{text-align:left}
+      .statsbar{grid-template-columns:1fr 1fr} .sec{padding:40px 20px}
+      .pgrid,.pgrid.g4,.pgrid.g3{grid-template-columns:repeat(2,1fr)}
+      .vid-layout{grid-template-columns:1fr} .mapa-layout{grid-template-columns:1fr}
+      .mapa-frame{min-height:260px} .div{margin:0 20px}
+      footer{padding:20px;flex-wrap:wrap;gap:14px}
+    }
+    @media(max-width:480px){
+      .pgrid,.pgrid.g4,.pgrid.g3{grid-template-columns:1fr}
+      .statsbar{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="index.html" class="brand">Pescaria <span>Total</span></a>
+  <nav><ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="produtos.html" class="active">Produtos</a></li>
+    <li><a href="contato.html">Contato</a></li>
+  </ul></nav>
+  <a href="#produtos" class="nav-cta">Ver produtos <svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" fill="none" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-kicker"><div class="hero-kicker-line"></div><span>Equipamentos premium</span></div>
+    <h1>Tudo para a sua<br><em>melhor pescaria</em></h1>
+  </div>
+  <div class="hero-right">
+    <p class="hero-desc">+40 produtos — varas, molinetes, iscas, linhas e acessórios para todos os níveis.</p>
+    <a href="#produtos" class="hero-cta">Explorar catálogo <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="statsbar">
+  <div class="stat"><div class="stat-n">+40</div><div class="stat-l">Produtos</div></div>
+  <div class="stat"><div class="stat-n">12 anos</div><div class="stat-l">No mercado</div></div>
+  <div class="stat"><div class="stat-n">4.9 ★</div><div class="stat-l">Avaliação</div></div>
+  <div class="stat"><div class="stat-n">Grátis</div><div class="stat-l">Frete acima de R$200</div></div>
+</div>
+
+<!-- PRODUTOS -->
+<main id="conteudoPrincipal">
+<section class="sec sand" id="produtos">
+
+  <div class="sec-head">
+    <div>
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Catálogo 2024</span></div>
+      <h2 class="sec-title">Nossos <em>produtos</em></h2>
+    </div>
+    <span class="sec-count">40 itens · 7 categorias</span>
+  </div>
+
+  <!-- CAT NAV -->
+  <div class="cat-nav" id="catNav">
+    <button class="cat-btn active" data-cat="all">Todos</button>
+    <button class="cat-btn" data-cat="varas">🎣 Varas</button>
+    <button class="cat-btn" data-cat="molinetes">⚙️ Carretilhas</button>
+    <button class="cat-btn" data-cat="linhas">🧵 Linhas</button>
+    <button class="cat-btn" data-cat="anzois">🪝 Anzóis</button>
+    <button class="cat-btn" data-cat="iscas">🐛 Iscas</button>
+    <button class="cat-btn" data-cat="acess">🧰 Acessórios</button>
+    <button class="cat-btn" data-cat="extras">⚡ Extras</button>
+  </div>
+
+  <!-- ═══ VARAS ═══ -->
+  <div class="cat-block" data-section="varas">
+    <div class="cat-title">🎣 Varas de Pesca <span class="cat-title-count">5 produtos</span></div>
+    <ul class="pgrid">
+
+      <li class="card">
+        <div class="cthumb"><span class="cthumb-icon">🎣</span><span class="ctag ctag-dk">Iniciante</span></div>
+        <div class="cbody">
+          <p class="ccat">Vara Telescópica</p><h3 class="ch">Vara Telescópica Fibra de Vidro 1,60m</h3>
+          <p class="cdesc">Ideal para começar. Leve e fácil de manusear para rios e represas.</p>
+          <div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(74)</span></div>
+          <div class="cfoot"><div><div class="cprice">R$ 49,90</div><div class="cprice-inst">2x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+        </div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </li>
+
+      <li class="card">
+        <div class="cthumb"><span class="cthumb-icon">🎣</span><span class="ctag ctag-dk">Intermediária</span></div>
+        <div class="cbody">
+          <p class="ccat">Vara Carbono</p><h3 class="ch">Vara Carbono IM6 1,80m</h3>
+          <p class="cdesc">Carbono IM6, maior sensibilidade e leveza. Ótimo custo-benefício para pescadores em evolução.</p>
+          <div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(119)</span></div>
+          <div class="cfoot"><div><div class="cprice">R$ 89,90</div><div class="cprice-old">R$ 119,90</div><div class="cprice-inst">3x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+        </div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </li>
+
+      <li class="card">
+        <div class="cthumb"><span class="cthumb-icon">🎣</span><span class="ctag ctag-gd">Profissional</span><span class="cbadge">-20%</span></div>
+        <div class="cbody">
+          <p class="ccat">Vara Carbono</p><h3 class="ch">Vara Carbono IM8 2,10m</h3>
+          <p class="cdesc">Carbono IM8 de alta modulação. Ação rápida, ultraleve. Para pescadores que buscam performance máxima.</p>
+          <div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(203)</span></div>
+          <div class="cfoot"><div><div class="cprice">R$ 159,90</div><div class="cprice-old">R$ 199,90</div><div class="cprice-inst">5x sem juros</div></div><button class="bbuy bbuy-gd">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+        </div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </li>
+
+      <li class="card">
+        <div class="cthumb"><span class="cthumb-icon">🎣</span><span class="ctag ctag-dk">Carretilha</span></div>
+        <div class="cbody">
+          <p class="ccat">Vara Casting</p><h3 class="ch">Vara para Carretilha 1,90m Ação Rápida</h3>
+          <p class="cdesc">Desenvolvida para carretilha. Ação rápida, guias SIC. Para pesca em rios com correnteza.</p>
+          <div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(58)</span></div>
+          <div class="cfoot"><div><div class="cprice">R$ 129,90</div><div class="cprice-inst">4x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+        </div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </li>
+
+      <li class="card">
+        <div class="cthumb"><span class="cthumb-icon">🎣</span><span class="ctag ctag-dk">Pesca Pesada</span></div>
+        <div class="cbody">
+          <p class="ccat">Vara Heavy</p><h3 class="ch">Vara Pesca Pesada 2,40m Peixes Grandes</h3>
+          <p class="cdesc">Para dourado, pirarucu e espécies grandes. Ação lenta, resistência máxima. Linha até 80 lb.</p>
+          <div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(41)</span></div>
+          <div class="cfoot"><div><div class="cprice">R$ 189,90</div><div class="cprice-old">R$ 239,90</div><div class="cprice-inst">6x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+        </div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+      </li>
+
+    </ul>
+  </div>
+
+  <!-- ═══ CARRETILHAS ═══ -->
+  <div class="cat-block" data-section="molinetes">
+    <div class="cat-title">⚙️ Carretilhas e Molinetes <span class="cat-title-count">5 produtos</span></div>
+    <ul class="pgrid">
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">⚙️</span><span class="ctag ctag-dk">Leve</span></div><div class="cbody"><p class="ccat">Molinete</p><h3 class="ch">Molinete Spinning Tamanho 2000</h3><p class="cdesc">Ultralight. Peso reduzido, frenagem frontal suave. 5 rolamentos. Linha até 0,20mm.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(62)</span></div><div class="cfoot"><div><div class="cprice">R$ 99,90</div><div class="cprice-inst">3x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">⚙️</span><span class="ctag ctag-dk">Médio</span></div><div class="cbody"><p class="ccat">Molinete</p><h3 class="ch">Molinete Spinning Tamanho 4000</h3><p class="cdesc">Versátil para uso geral. Corpo em alumínio. 7 rolamentos. Recuperação 5.2:1. Até 0,30mm/200m.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(147)</span></div><div class="cfoot"><div><div class="cprice">R$ 149,90</div><div class="cprice-old">R$ 189,90</div><div class="cprice-inst">5x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">⚙️</span><span class="ctag ctag-promo">Promoção</span><span class="cbadge">-25%</span></div><div class="cbody"><p class="ccat">Molinete</p><h3 class="ch">Molinete Spinning Tamanho 6000</h3><p class="cdesc">Para pesca pesada em mar ou rios grandes. Freio traseiro duplo. 9 rolamentos. Até 0,40mm/250m.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(89)</span></div><div class="cfoot"><div><div class="cprice">R$ 189,90</div><div class="cprice-old">R$ 254,90</div><div class="cprice-inst">6x sem juros</div></div><button class="bbuy bbuy-gd">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🎯</span><span class="ctag ctag-dk">Iniciante</span></div><div class="cbody"><p class="ccat">Carretilha</p><h3 class="ch">Carretilha Perfil Baixo Iniciante</h3><p class="cdesc">Freio magnético fácil de ajustar. Ideal para aprender a usar carretilha. 6 rolamentos.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(53)</span></div><div class="cfoot"><div><div class="cprice">R$ 179,90</div><div class="cprice-inst">6x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🎯</span><span class="ctag ctag-gd">Pesada</span></div><div class="cbody"><p class="ccat">Carretilha</p><h3 class="ch">Carretilha Perfil Alto Pesca Pesada</h3><p class="cdesc">Alta capacidade de linha. Freio centrífugo potente. Para traíra, piranha e peixes de fundo.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(77)</span></div><div class="cfoot"><div><div class="cprice">R$ 249,90</div><div class="cprice-old">R$ 309,90</div><div class="cprice-inst">8x sem juros</div></div><button class="bbuy bbuy-gd">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+    </ul>
+  </div>
+
+  <!-- ═══ LINHAS ═══ -->
+  <div class="cat-block" data-section="linhas">
+    <div class="cat-title">🧵 Linhas de Pesca <span class="cat-title-count">4 produtos</span></div>
+    <ul class="pgrid g4">
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🧵</span><span class="ctag ctag-dk">Uso geral</span></div><div class="cbody"><p class="ccat">Monofilamento</p><h3 class="ch">Linha Mono 0,25mm — 300m</h3><p class="cdesc">Alta resistência ao nó. Transparente. Para tucunaré e lambari. Uso geral em água doce.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(91)</span></div><div class="cfoot"><div><div class="cprice">R$ 24,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🧵</span><span class="ctag ctag-dk">Resistente</span></div><div class="cbody"><p class="ccat">Monofilamento</p><h3 class="ch">Linha Mono 0,40mm — 300m</h3><p class="cdesc">Alta resistência à abrasão. Pesca de fundo e em locais com pedras. Para peixes de maior porte.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(67)</span></div><div class="cfoot"><div><div class="cprice">R$ 29,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🧵</span><span class="ctag ctag-new">Novo</span></div><div class="cbody"><p class="ccat">Multifilamento</p><h3 class="ch">Linha Multi 20 lb — Sensível</h3><p class="cdesc">Trançada 4x. Baixo diâmetro, alta sensibilidade. Ideal para iscas artificiais. Resistente ao corte.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(134)</span></div><div class="cfoot"><div><div class="cprice">R$ 49,90</div><div class="cprice-old">R$ 64,90</div><div class="cprice-inst">2x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🧵</span><span class="ctag ctag-dk">Pesada</span></div><div class="cbody"><p class="ccat">Multifilamento</p><h3 class="ch">Linha Multi 50 lb — Pesca Pesada</h3><p class="cdesc">Trançada 8x. Altíssima resistência para espécies grandes. Diâmetro reduzido. Cor verde musgo.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(48)</span></div><div class="cfoot"><div><div class="cprice">R$ 69,90</div><div class="cprice-inst">3x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+    </ul>
+  </div>
+
+  <!-- ═══ ANZÓIS ═══ -->
+  <div class="cat-block" data-section="anzois">
+    <div class="cat-title">🪝 Anzóis <span class="cat-title-count">5 produtos</span></div>
+    <ul class="pgrid">
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🪝</span><span class="ctag ctag-dk">Nº 6</span></div><div class="cbody"><p class="ccat">Anzol</p><h3 class="ch">Anzol Simples Nº 6</h3><p class="cdesc">Para lambari e cará. Aço temperado ultra-sharp. Embalagem com 10 unidades.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(155)</span></div><div class="cfoot"><div><div class="cprice">R$ 6,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🪝</span><span class="ctag ctag-dk">Nº 2</span></div><div class="cbody"><p class="ccat">Anzol</p><h3 class="ch">Anzol Simples Nº 2</h3><p class="cdesc">Para traíra, corvina e robalo. Aço inox galvanizado anti-corrosão. 10 unidades.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(98)</span></div><div class="cfoot"><div><div class="cprice">R$ 7,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🪝</span><span class="ctag ctag-dk">Tilápia</span></div><div class="cbody"><p class="ccat">Anzol Especial</p><h3 class="ch">Anzol para Tilápia</h3><p class="cdesc">Ponta recurvada para encaixe perfeito na boca da tilápia. Alta taxa de ferrada.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(201)</span></div><div class="cfoot"><div><div class="cprice">R$ 8,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🪝</span><span class="ctag ctag-dk">Oceânico</span></div><div class="cbody"><p class="ccat">Anzol Mar</p><h3 class="ch">Anzol para Pesca Oceânica</h3><p class="cdesc">Aço inox de alta espessura. Resistente à corrosão salina. Para bijupirá, atum e alto mar.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(44)</span></div><div class="cfoot"><div><div class="cprice">R$ 12,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🪝</span><span class="ctag ctag-gd">Kit</span></div><div class="cbody"><p class="ccat">Kit Anzóis</p><h3 class="ch">Kit Anzóis Variados com Caixa</h3><p class="cdesc">50 anzóis em 5 tamanhos + caixa organizadora. Perfeito para quem pesca espécies diversas.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(322)</span></div><div class="cfoot"><div><div class="cprice">R$ 34,90</div><div class="cprice-old">R$ 44,90</div><div class="cprice-inst">2x sem juros</div></div><button class="bbuy bbuy-gd">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+    </ul>
+  </div>
+
+  <!-- ═══ ISCAS ═══ -->
+  <div class="cat-block" data-section="iscas">
+    <div class="cat-title">🐛 Iscas <span class="cat-title-count">5 produtos</span></div>
+    <ul class="pgrid">
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🐛</span><span class="ctag ctag-new">Novo</span></div><div class="cbody"><p class="ccat">Isca Artificial</p><h3 class="ch">Isca Minhoca de Silicone</h3><p class="cdesc">Silicone ultra-macio, movimento natural na água. 10cm. Cores variadas. Pacote com 5 unidades.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(187)</span></div><div class="cfoot"><div><div class="cprice">R$ 19,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🐟</span><span class="ctag ctag-dk">Minnow</span></div><div class="cbody"><p class="ccat">Isca Artificial</p><h3 class="ch">Isca Tipo Peixe (Minnow Plástico)</h3><p class="cdesc">Mergulho 1–2m. Anzóis duplos inclusos. Para tucunaré e robalo. 9cm / 12g.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(241)</span></div><div class="cfoot"><div><div class="cprice">R$ 24,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">💧</span><span class="ctag ctag-gd">Superfície</span></div><div class="cbody"><p class="ccat">Isca de Superfície</p><h3 class="ch">Isca Popper de Superfície</h3><p class="cdesc">Boca côncava cria splash ao ser guiada. Provoca ataques agressivos de tucunaré e corvina.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(163)</span></div><div class="cfoot"><div><div class="cprice">R$ 29,90</div><div class="cprice-old">R$ 39,90</div><div class="cprice-inst">2x sem juros</div></div><button class="bbuy bbuy-gd">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🌊</span><span class="ctag ctag-dk">Meia-água</span></div><div class="cbody"><p class="ccat">Isca Artificial</p><h3 class="ch">Isca Meia-Água (Jerkbait)</h3><p class="cdesc">Trabalha a 50–100cm de profundidade. Movimento errático. Perfeita para dourado e piranha.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(79)</span></div><div class="cfoot"><div><div class="cprice">R$ 22,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🦐</span><span class="ctag ctag-dk">Natural</span></div><div class="cbody"><p class="ccat">Isca Natural</p><h3 class="ch">Isca Natural (Minhoca / Camarão)</h3><p class="cdesc">Minhoca ou camarão seco embalado a vácuo. Alta aceitação por qualquer espécie. Pesca de fundo.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(294)</span></div><div class="cfoot"><div><div class="cprice">R$ 14,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+    </ul>
+  </div>
+
+  <!-- ═══ ACESSÓRIOS ═══ -->
+  <div class="cat-block" data-section="acess">
+    <div class="cat-title">🧰 Acessórios <span class="cat-title-count">7 produtos</span></div>
+    <ul class="pgrid">
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🔵</span><span class="ctag ctag-dk">Boia</span></div><div class="cbody"><p class="ccat">Acessório</p><h3 class="ch">Boia de Pesca Simples</h3><p class="cdesc">Plástico resistente. Sinaliza a picada com clareza. Tamanhos P, M e G. Fácil de fixar na linha.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(88)</span></div><div class="cfoot"><div><div class="cprice">R$ 4,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">💡</span><span class="ctag ctag-new">Novo</span></div><div class="cbody"><p class="ccat">Pesca Noturna</p><h3 class="ch">Boia Luminosa Noturna</h3><p class="cdesc">LED de alta visibilidade. Resistente à água. Bateria incluída. Ideal para pesca noturna.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(176)</span></div><div class="cfoot"><div><div class="cprice">R$ 9,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">⚫</span><span class="ctag ctag-dk">Chumbo</span></div><div class="cbody"><p class="ccat">Peso</p><h3 class="ch">Chumbo Peso Variado</h3><p class="cdesc">Disponível em 5g, 10g, 20g, 30g e 50g. Esférico ou chumbada. 10 unidades por embalagem.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(112)</span></div><div class="cfoot"><div><div class="cprice">R$ 8,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🔗</span><span class="ctag ctag-dk">Girador</span></div><div class="cbody"><p class="ccat">Terminal</p><h3 class="ch">Girador com Snap</h3><p class="cdesc">Evita torção da linha. Aço carbono niquelado. Suporta até 25 kg. Embalagem com 10 unidades.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(143)</span></div><div class="cfoot"><div><div class="cprice">R$ 11,90</div><div class="cprice-inst">À vista</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">📦</span><span class="ctag ctag-gd">Organizer</span></div><div class="cbody"><p class="ccat">Organização</p><h3 class="ch">Caixa Organizadora de Pesca</h3><p class="cdesc">28 divisórias ajustáveis. Fecho hermético resistente à água. Comporta até 400 iscas.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(267)</span></div><div class="cfoot"><div><div class="cprice">R$ 42,90</div><div class="cprice-old">R$ 61,90</div><div class="cprice-inst">2x sem juros</div></div><button class="bbuy bbuy-gd">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🔧</span><span class="ctag ctag-dk">Alicate</span></div><div class="cbody"><p class="ccat">Ferramenta</p><h3 class="ch">Alicate de Pesca com Corte de Linha</h3><p class="cdesc">Aço inox. Remove anzóis com facilidade. Corta linha mono e multifilamento. Cordão de segurança incluso.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(99)</span></div><div class="cfoot"><div><div class="cprice">R$ 39,90</div><div class="cprice-inst">2x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+    </ul>
+  </div>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🗂️</span><span class="ctag ctag-new">Novo</span></div><div class="cbody"><p class="ccat">Organização</p><h3 class="ch">Estojo Porta-Varas</h3><p class="cdesc">Suporta até 6 varas montadas. Lona impermeável reforçada. Alças de ombro ajustáveis. 1,80m de comprimento.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(83)</span></div><div class="cfoot"><div><div class="cprice">R$ 89,90</div><div class="cprice-old">R$ 109,90</div><div class="cprice-inst">3x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+    </ul>
+  </div>
+
+  <!-- ═══ EXTRAS ═══ -->
+  <div class="cat-block" data-section="extras">
+    <div class="cat-title">⚡ Equipamentos Extras <span class="cat-title-count">5 produtos</span></div>
+    <ul class="pgrid">
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🥅</span><span class="ctag ctag-dk">Rede</span></div><div class="cbody"><p class="ccat">Captura</p><h3 class="ch">Rede / Passador de Peixe</h3><p class="cdesc">Cabo telescópico até 1,80m. Malha fina nylon. Para retirar o peixe sem machucar.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(54)</span></div><div class="cfoot"><div><div class="cprice">R$ 59,90</div><div class="cprice-inst">2x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">⚖️</span><span class="ctag ctag-new">Novo</span></div><div class="cbody"><p class="ccat">Medição</p><h3 class="ch">Balança Portátil Digital</h3><p class="cdesc">Até 50 kg. Display LCD. Gancho inox. Precisão ±10g. Bateria CR2032. Com case de proteção.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(189)</span></div><div class="cfoot"><div><div class="cprice">R$ 49,90</div><div class="cprice-old">R$ 69,90</div><div class="cprice-inst">2x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🔦</span><span class="ctag ctag-dk">Noturna</span></div><div class="cbody"><p class="ccat">Pesca Noturna</p><h3 class="ch">Lanterna de Cabeça para Pesca</h3><p class="cdesc">3 modos: branco, vermelho e strobe. IPX4 à prova d'água. Recarregável USB. 200 lúmens.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star e" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(211)</span></div><div class="cfoot"><div><div class="cprice">R$ 69,90</div><div class="cprice-old">R$ 89,90</div><div class="cprice-inst">3x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">🪑</span><span class="ctag ctag-dk">Conforto</span></div><div class="cbody"><p class="ccat">Conforto</p><h3 class="ch">Cadeira Dobrável para Pesca</h3><p class="cdesc">Alumínio leve, suporta 120 kg. Bolso lateral e porta-copo. Bolsa de transporte inclusa.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(134)</span></div><div class="cfoot"><div><div class="cprice">R$ 119,90</div><div class="cprice-old">R$ 149,90</div><div class="cprice-inst">4x sem juros</div></div><button class="bbuy">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+
+      <li class="card"><div class="cthumb"><span class="cthumb-icon">❄️</span><span class="ctag ctag-gd">Premium</span><span class="cbadge">-15%</span></div><div class="cbody"><p class="ccat">Armazenamento</p><h3 class="ch">Cooler Térmico 25L para Peixe</h3><p class="cdesc">Mantém frio até 24h. Tampa hermética com trava. Alças reforçadas. Dreno para escoamento.</p><div class="cstars"><div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><span class="rct">(178)</span></div><div class="cfoot"><div><div class="cprice">R$ 169,90</div><div class="cprice-old">R$ 199,90</div><div class="cprice-inst">6x sem juros</div></div><button class="bbuy bbuy-gd">Comprar <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div></div><button class="bwish"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button></li>
+    </ul>
+  </div>
+
+</section>
+
+<div class="div"></div>
+
+<!-- VIDEO -->
+<section class="sec white">
+  <div class="vid-layout">
+    <div>
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Aprenda na prática</span></div>
+      <h2 class="sec-title">Os 3 equipamentos <em>essenciais</em></h2>
+      <p style="font-size:14px;color:var(--mist);line-height:1.85;margin-top:10px;">Do iniciante ao experiente — os equipamentos que não podem faltar em nenhuma pescaria.</p>
+      <div class="vid-meta">
+        <div class="vid-meta-item"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Duração: ~12 minutos</div>
+        <div class="vid-meta-item"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Conteúdo especializado</div>
+        <div class="vid-meta-item"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>+15 mil visualizações</div>
+      </div>
+    </div>
+    <div class="vid-wrap">
+      <div class="vid-frame">
+        <iframe src="https://www.youtube.com/embed/9k1WhetjqZc" title="Os 3 equipamentos essenciais para pescar" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- MAPA -->
+<section class="sec dark">
+  <div class="eyebrow"><div class="eyebrow-line"></div><span>Visite-nos</span></div>
+  <h2 class="sec-title light">Nossa loja em <em>Matelândia, PR</em></h2>
+  <div class="mapa-layout">
+    <div class="mapa-cards">
+      <div class="mapa-card"><div class="mapa-lbl">📍 Endereço</div><div class="mapa-val"><strong>Av. Paraná, 500</strong><br>Centro — Matelândia, PR<br>CEP 85.887-000</div></div>
+      <div class="mapa-card"><div class="mapa-lbl">🕐 Horário</div><div class="mapa-val"><strong>Seg–Sex:</strong> 8h às 18h<br><strong>Sábado:</strong> 8h às 13h<br><strong>Domingo:</strong> Fechado</div></div>
+      <div class="mapa-card"><div class="mapa-lbl">📞 Contato</div><div class="mapa-val"><strong>(45) 9 9999-0000</strong><br>pescaria@total.com.br</div></div>
+      <div class="mapa-card"><div class="mapa-lbl">🚗 Estacionamento</div><div class="mapa-val">Gratuito para clientes</div></div>
+    </div>
+    <div class="mapa-frame">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14468.23!2d-53.9907!3d-25.2393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94f3f7e4b1d2a3b5%3A0x1a2b3c4d5e6f7a8b!2sMatel%C3%A2ndia%2C%20PR!5e0!3m2!1spt-BR!2sbr!4v1714000000000" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Matelândia PR"></iframe>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fbrand">Pescaria Total</div>
+  <div class="flinks">
+    <a href="#">Home</a>
+    <a href="#">Produtos</a>
+    <a href="#">Contato</a>
+    <a href="#">Trocas & Devoluções</a>
+  </div>
+  <p class="fcopy">&copy; Pescaria Total 2024 — Matelândia, PR</p>
+</footer>
+
+<script>
+  // Category filter
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      document.querySelectorAll('.cat-block').forEach(block => {
+        block.style.display = (cat === 'all' || block.dataset.section === cat) ? '' : 'none';
+      });
+    });
+  });
+
+  // Wishlist toggle
+  document.querySelectorAll('.bwish').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      btn.classList.toggle('on');
+    });
+  });
+</script>
+</body>
+</html>
